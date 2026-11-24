@@ -1,70 +1,64 @@
- # Salut de costat a costat per a la simulació de la sessió ROS 2.
-common:
-  execute: true
-  group_name: ur_manipulator
-  ik_link: tool0
-  target_frame: table
-  planning_frame: base_link
-  max_velocity: 0.1
-  max_acceleration: 0.1
-  ik_timeout_sec: 1.0
-  print_joints: true
+
+sequence_name: give5
 
 steps:
-  - name: home_start
-    target_xyz: [0, -400, 500]
-    target_rpy: [90.0, 0.0, 0.0]
-    seed_from_joint_states: false
-    seed_joints: [-60, -60, -100, 170, -60, 0]
-    duration: 4.0
-    sleep_after: 1.0
+  - name: init
+    motion: moveJ
+    joints_deg: [-60, -65, -100, 170, -60, 0]
+    acceleration: 1.2
+    velocity: 0.10
+    time: 4.0
+    blend: 0.0
 
-  - name: raise_to_wave
-    target_xyz: [-300, -300, 500]
-    target_rpy: [0.0, 0.0, 90.0]
-    seed_from_joint_states: true
-    duration: 4.0
-    sleep_after: 0.4
+  - name: approach_give5
+    motion: moveL
+    target_xyz_mm: [-400, -250, 500]
+    target_rpy_deg: [0, 0, 90]
+    acceleration: 1.2
+    velocity: 0.10
+    time: 3.0
+    blend: 0.0
 
-  - name: wave_left_1
-    target_xyz: [-360, -300, 500]
-    target_rpy: [0.0, 0.0, 90.0]
-    seed_from_joint_states: true
-    duration: 2.0
-    sleep_after: 0.25
+  - name: lower_hand
+    motion: moveL
+    target_xyz_mm: [-400, -250, 480]
+    target_rpy_deg: [0, 0, 90]
+    acceleration: 1.2
+    velocity: 0.08
+    time: 1.0
+    blend: 0.0
 
-  - name: wave_right_1
-    target_xyz: [-240, -300, 500]
-    target_rpy: [0.0, 0.0, 90.0]
-    seed_from_joint_states: true
-    duration: 2.0
-    sleep_after: 0.25
+  - name: raise_hand
+    motion: moveL
+    target_xyz_mm: [-400, -250, 520]
+    target_rpy_deg: [0, 0, 90]
+    acceleration: 1.2
+    velocity: 0.08
+    time: 1.0
+    blend: 0.0
 
-  - name: wave_left_2
-    target_xyz: [-360, -300, 500]
-    target_rpy: [0.0, 0.0, 90.0]
-    seed_from_joint_states: true
-    duration: 2.0
-    sleep_after: 0.25
+  - name: give5
+    motion: moveL
+    target_xyz_mm: [-400, -300, 500]
+    target_rpy_deg: [0, 0, 90]
+    acceleration: 1.2
+    velocity: 0.10
+    time: 1.0
+    blend: 0.0
 
-  - name: wave_right_2
-    target_xyz: [-240, -300, 500]
-    target_rpy: [0.0, 0.0, 90.0]
-    seed_from_joint_states: true
-    duration: 2.0
-    sleep_after: 0.25
+  - name: return_approach
+    motion: moveL
+    target_xyz_mm: [-400, -250, 500]
+    target_rpy_deg: [0, 0, 90]
+    acceleration: 1.2
+    velocity: 0.10
+    time: 1.0
+    blend: 0.0
 
-  - name: center_after_wave
-    target_xyz: [-300, -300, 500]
-    target_rpy: [0.0, 0.0, 90.0]
-    seed_from_joint_states: true
-    duration: 2.0
-    sleep_after: 0.4
-
-  - name: home_end
-    target_xyz: [0, -400, 500]
-    target_rpy: [90.0, 0.0, 0.0]
-    seed_from_joint_states: false
-    seed_joints: [-60, -60, -100, 170, -60, 0]
-    duration: 4.0
-    sleep_after: 1.0
+  - name: return_init
+    motion: moveJ
+    joints_deg: [-60, -65, -100, 170, -60, 0]
+    acceleration: 1.2
+    velocity: 0.10
+    time: 3.0
+    blend: 0.0
